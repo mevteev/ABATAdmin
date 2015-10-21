@@ -51,6 +51,7 @@ public class AppServer {
 		
 		while (!isStopped()) {
 			try {
+				//waiting for a client
 				//accept incoming connections
 				Socket clientSocket = serverSocket.accept();
 				

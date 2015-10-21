@@ -24,14 +24,14 @@ public class AppServerWorker implements Runnable {
 		BufferedReader in = null;
 		PrintWriter out = null;
 		
-		AppSettings.getLog().log("Accepted Client Address - " + clientSocket.getInetAddress().getHostName());
+		//AppSettings.getLog().log("Accepted Client Address - " + clientSocket.getInetAddress().getHostName());
 		appServer.getClients().add(clientSocket.getInetAddress().getHostName());
 		
 		try {
 			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			out = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 			
-			while (isRunning) {
+			//while (isRunning) {
 				//read incoming stream
 				String clientCommand = in.readLine();
 				if (clientCommand != null) {
@@ -76,7 +76,7 @@ public class AppServerWorker implements Runnable {
 					if (clientCommand.equalsIgnoreCase("readsettings")) {
 						appServer.readSettings();
 					}
-				}
+				//}
 				
 			}
 		} catch (Exception e) {

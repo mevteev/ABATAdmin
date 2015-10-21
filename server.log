@@ -33321,3 +33321,35 @@ Wed Jun 03 08:58:12 MSK 2015	Jira listener stopped
 09.09.2015 12:15:52	Stopping client thread for client : DMSK0579.corp.vtbcapital.internal
 08.10.2015 17:16:48	Connected to server at smsk01gw12:6666
 08.10.2015 17:19:51	Connected to server at smsk01gw12:6666
+21.10.2015 19:04:26	Unknown Host :smsk0579
+21.10.2015 19:04:41	Unknown Host :smsk0579
+21.10.2015 19:13:33	Unknown Host :smsk0579
+21.10.2015 19:14:03	Unknown Host :smsk0579
+21.10.2015 19:16:51	Unknown Host :smsk0579
+21.10.2015 19:17:05	Can't connect to server at 6666. Make sure it is running.
+21.10.2015 19:17:14	Can't connect to server at 6666. Make sure it is running.
+21.10.2015 19:17:21	Can't connect to server at 6666. Make sure it is running.
+21.10.2015 19:18:15	Connected to server at dmsk0579:6666
+21.10.2015 19:18:15	Connected to server at dmsk0579:6666
+21.10.2015 19:18:20	Connected to server at dmsk0579:6666
+21.10.2015 19:18:23	Connected to server at dmsk0579:6666
+21.10.2015 19:18:23	Jira listener started
+21.10.2015 19:18:25	Connected to server at dmsk0579:6666
+21.10.2015 19:18:30	Connected to server at dmsk0579:6666
+21.10.2015 19:18:31	Connected to server at dmsk0579:6666
+21.10.2015 19:18:32	Queue listener started
+21.10.2015 19:18:35	Connected to server at dmsk0579:6666
+21.10.2015 19:18:40	Connected to server at dmsk0579:6666
+21.10.2015 19:18:45	Connected to server at dmsk0579:6666
+21.10.2015 19:18:50	Connected to server at dmsk0579:6666
+21.10.2015 19:18:50	Stopping client thread for client : DMSK0579.corp.vtbcapital.internal
+21.10.2015 19:42:21	Can't connect to server at 6666. Make sure it is running.
+21.10.2015 19:42:59	Jira listener started
+21.10.2015 19:43:43	Stopping client thread for client : DMSK0579.corp.vtbcapital.internal
+21.10.2015 19:44:21	Can't connect to server at 6666. Make sure it is running.
+21.10.2015 19:45:11	Can't connect to server at 6666. Make sure it is running.
+21.10.2015 19:45:24	Can't connect to server at 6666. Make sure it is running.
+21.10.2015 19:45:30	Can't connect to server at 6666. Make sure it is running.
+21.10.2015 19:45:47	Jira listener started
+21.10.2015 19:45:52	Queue listener started
+21.10.2015 19:46:08	Stopping client thread for client : DMSK0579.corp.vtbcapital.internal

@@ -149,7 +149,7 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 
 
 		
-		if (connect()) {
+		//if (connect()) {
 		
 			new Thread(new Runnable() {
 				
@@ -167,7 +167,7 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 					
 				}
 			}).start();
-		}
+		//}
 		
 		new Thread(AppSettings.getLog()).start();
 		
@@ -470,11 +470,14 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 		jiraThread.start();
 		*/
 		
-		if (clientSocket != null) {
+		//if (clientSocket != null) {
+		if (connect()) {
 			outBuffer.println("jirastart");
 			outBuffer.flush();
- 
+			disconnect();
 		}
+ 
+		//}
 	}
 	
 	private void jiraStop() {
@@ -483,11 +486,15 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 			jiraThread.interrupt();
 			*/
 		
-		if (clientSocket != null) {
+		//if (clientSocket != null) {
+		if (connect()) {
 			outBuffer.println("jirastop");
 			outBuffer.flush();
- 
+			disconnect();
 		}
+			
+ 
+		//}
 	}
 	
 	private void queueStart() {
@@ -496,11 +503,15 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 		queueThread = new Thread(model);
 		queueThread.start();
 		*/
-		if (clientSocket != null) {
+		//if (clientSocket != null) {
+		if (connect()) {
+
 			outBuffer.println("abstart");
 			outBuffer.flush();
- 
+			disconnect();
 		}
+ 
+		//}
 		
 		
 	}
@@ -510,17 +521,23 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 		if (queueThread != null && queueThread.isAlive())
 			queueThread.interrupt();*/
 		
-		if (clientSocket != null) {
+		//if (clientSocket != null) {
+		if (connect()) {
+
 			outBuffer.println("abstop");
 			outBuffer.flush();
+			disconnect();
  
 		}
 	}
 	
 	private void stopServer() {
-		if (clientSocket != null) {
+		//if (clientSocket != null) {
+		if (connect()) {
+
 			outBuffer.println("stop");
 			outBuffer.flush();
+			disconnect();
  
 		}		
 	}
@@ -618,7 +635,7 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 			return false;
 		}
 		
-		AppSettings.getLog().log("Connected to server at " + AppSettings.getPREF_SERVER() + ":" + AppSettings.getPREF_SERVER_PORT());
+		//AppSettings.getLog().log("Connected to server at " + AppSettings.getPREF_SERVER() + ":" + AppSettings.getPREF_SERVER_PORT());
 		
 		
 		
@@ -628,9 +645,23 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 
 	}
 	
+	private boolean disconnect() {
+		try {
+			outBuffer.close();
+			inBuffer.close();
+			clientSocket.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();	
+		}
+		return true;
+	}
+	
 	
 	private String getStatus() {
-		if (clientSocket != null) {
+		//if (clientSocket != null) {
+		if (connect()) {
+
 			outBuffer.println("status");
 			outBuffer.flush();
 			try {
@@ -638,6 +669,8 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 				AppSettings.getLog().log(Level.SEVERE, e.getMessage());
+			} finally {
+				disconnect();
 			}
 		}
 		return null;
@@ -648,20 +681,22 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 		String at = "ABThread:";
 		
 		String status = getStatus();
-		int index = status.indexOf(jt);
-		char jiraStatus = status.charAt(index + jt.length());
-		
-		index = status.indexOf(at);
-		char abStatus = status.charAt(index + at.length());
-		
-		setRunningJira((jiraStatus == '1'));
-		setRunningAB((abStatus == '1'));
-		
-		lblStatusBar.setText(getStatusText());
-		if (isRunningAB() && isRunningJira()) {
-			lblStatusBar.setForeground(Color.BLACK);
-		} else {
-			lblStatusBar.setForeground(Color.RED);
+		if (status != null) {
+			int index = status.indexOf(jt);
+			char jiraStatus = status.charAt(index + jt.length());
+			
+			index = status.indexOf(at);
+			char abStatus = status.charAt(index + at.length());
+			
+			setRunningJira((jiraStatus == '1'));
+			setRunningAB((abStatus == '1'));
+			
+			lblStatusBar.setText(getStatusText());
+			if (isRunningAB() && isRunningJira()) {
+				lblStatusBar.setForeground(Color.BLACK);
+			} else {
+				lblStatusBar.setForeground(Color.RED);
+			}
 		}
 		
 	}
@@ -685,16 +720,11 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 //		jiraStop();
 //		queueStop();
 		//abHelper.disconnect();
-		if (clientSocket != null) {
+		//if (clientSocket != null) {
+		if (connect()) {
+
 			outBuffer.println("quit");
-			try {
-				outBuffer.close();
-				inBuffer.close();
-				clientSocket.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			disconnect();
 		}
 
 	}
