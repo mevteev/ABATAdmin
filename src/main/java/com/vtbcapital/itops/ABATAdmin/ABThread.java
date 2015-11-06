@@ -118,7 +118,7 @@ public class ABThread extends Thread {
 									//AppSettings.getLog().log("Processing " + jiraItem);
 									// Change status in JIRA
 									
-									jh.commentIssue(issue, tq.getCompany() + ": Start processing");
+									//jh.commentIssue(issue, tq.getCompany() + ": Start processing");
 									jh.progressIssue(issue);
 									
 									//Trigger active batch
