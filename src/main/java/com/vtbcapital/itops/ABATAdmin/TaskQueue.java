@@ -356,23 +356,59 @@ public class TaskQueue extends ReferenceType {
 		} finally {
 			session.close();
 		}
-		
-		
-		
 		return -1;
-
-		
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<TaskQueue> getCompanyList(Instances inst, String jiraItem) {
+		SessionObjects so = AppSettings.getSessionObjects();
+		Session session = so.getFactory().openSession();
+		Transaction tx = null;
+		
+		try {
+			tx = session.beginTransaction();
+			
+	
+			return (List<TaskQueue>) session.createCriteria(TaskQueue.class)
+					.add (Restrictions.eq("instance", inst))
+					.add (Restrictions.eq("jiraItem", jiraItem))
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+					//.setProjection(Projections.property("company"))
+					.list();
+
+
+
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+				e.printStackTrace();
+			}
+		} finally {
+			session.close();
+		}
+		
+		return null;
+	}
+	
 	
 	public static void main(String[] args) {
 		Instances inst = (Instances) ReferenceType.getElement("Production", Instances.tableName());
 		//Instances inst = (Instances) ReferenceType.getElement("UAT", Instances.tableName());
 		
-		List<ReferenceType> lst = getInProgressEntityList(inst, "company");
+		List<TaskQueue> lst = getCompanyList(inst, "NMC-744");
 		
-		for(ReferenceType cmp : lst) {
-			System.out.println( cmp );
+		Integer maxLen = 0;
+		for(TaskQueue cmp : lst) {
+			Integer len = cmp.getCompany().toString().length();
+			if (len > maxLen) {
+				maxLen = len;
+			}
+		}
+		
+		for(TaskQueue cmp : lst) {
+			System.out.println( String.format("%-"+maxLen.toString()+"s", cmp.getCompany()) + " - " + cmp.getStatus() );
 			//System.out.println( isCompanyAlreadyInProgress(inst, (Companies) cmp) );
+			
 		}
 	}
 	

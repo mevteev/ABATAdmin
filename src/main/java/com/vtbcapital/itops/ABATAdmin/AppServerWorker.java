@@ -80,6 +80,7 @@ public class AppServerWorker implements Runnable {
 				
 			}
 		} catch (Exception e) {
+			//AppSettings.getLog().log(e.getMessage());
 			e.printStackTrace();
 		} finally {
 			// clean up

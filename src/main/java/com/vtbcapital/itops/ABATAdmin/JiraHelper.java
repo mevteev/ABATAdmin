@@ -110,6 +110,16 @@ public class JiraHelper /*implements Runnable*/ {
 				
 	}
 	
+	public String getIssueJob(Issue issue) {
+		String issueType = issue.getIssueType().getName();
+		try {
+			return ((JSONObject) issue.getFieldByName("Job - " + issueType).getValue()).getString("value");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return issue.getKey();
+		}
+	}
+	
 	public List<Issue> getOpenedIssue() {
 		List<Issue> listIssue = new ArrayList<Issue>();
 		String jql = "project = " + AppSettings.getPREF_JIRA_PROJECT() +" AND status in (" + OPEN_TRANSITION + "," + RESTARTED_TRANSITION + ") ORDER BY created ASC";
@@ -371,6 +381,54 @@ public class JiraHelper /*implements Runnable*/ {
 			}
 		}
 		return null;
+	}
+	
+	public String getIssueLog(Issue issue) {
+		
+		List<TaskQueue> cList = TaskQueue.getCompanyList(AppSettings.getPREF_ACTIVE_INSTANCE_INST(), issue.getKey());
+		//String result = getIssueJob(issue) + '\n';  //Job Name
+		String result = "";
+		
+//		//Retrieve Date Start
+//		String dateStart = (String) issue.getFieldByName("Date Start").getValue();
+//
+//		//Retrieve Date End
+//		String dateEnd = (String) issue.getFieldByName("Date End").getValue();
+//		
+//		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy");
+//		Date startDate = Calendar.getInstance().getTime();
+//		Date endDate = Calendar.getInstance().getTime(); 
+//		try {
+//			startDate = formatter.parse(dateStart);
+//			endDate = formatter.parse(dateEnd);
+//			
+//			Calendar cal = Calendar.getInstance();
+//			cal.setTime(startDate);
+//			cal.add(Calendar.DATE, dateShift);
+//			
+//			startDate = cal.getTime();
+//			
+//			cal.setTime(endDate);
+//			cal.add(Calendar.DATE, dateShift);
+//			
+//			endDate = cal.getTime();
+//		}
+//		catch (ParseException e) {
+//			e.printStackTrace();
+//			AppSettings.getLog().log(Level.SEVERE, e.getMessage());
+//		}
+		
+		
+		
+//		result += fmt.format(startDate) + " - " + fmt.format(endDate) + '\n';
+		
+		for(TaskQueue cmp : cList) {
+			result += cmp.getCompany() + "\t - " + cmp.getStatus() +'\n';
+		}
+		
+		return result;
 	}
 	
 	

@@ -66,6 +66,7 @@ public class ReferenceType implements Comparable<ReferenceType> {
 		try {
 			tx = session.beginTransaction();
 			session.saveOrUpdate(this);
+			session.flush();
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null) {

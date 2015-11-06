@@ -39,12 +39,14 @@ public class ABThread extends Thread {
 								tq.setTimeFinished(abHelper.getJobExecTime(tq.getBatchId().intValue()));
 								tq.setExitCode(Long.valueOf(abHelper.getJobExitCode(tq.getBatchId().intValue())));
 								tq.setExitCodeDescription(abHelper.getJobExitCodeDescriprion(tq.getBatchId().intValue()));
+								tq.saveElement();
 								
 								Issue issue = jh.getIssue(tq.getJiraItem());
 								jh.commentIssue(issue, tq.getCompany() + ": Aborted");
 								
-								if (TaskQueue.countQueuedSubTasks(tq.getJiraItem(), AppSettings.getPREF_ACTIVE_INSTANCE_INST()) <= 1) {
-									jh.resolveIssue(issue, false, "Workflow aborted");
+								if (TaskQueue.countQueuedSubTasks(tq.getJiraItem(), AppSettings.getPREF_ACTIVE_INSTANCE_INST()) < 1) {
+									//jh.resolveIssue(issue, false, "Workflow aborted");
+									jh.resolveIssue(issue, false, jh.getIssueLog(issue));
 								}
 	
 							}
@@ -54,12 +56,14 @@ public class ABThread extends Thread {
 								tq.setTimeFinished(abHelper.getJobExecTime(tq.getBatchId().intValue()));
 								tq.setExitCode(Long.valueOf(abHelper.getJobExitCode(tq.getBatchId().intValue())));
 								tq.setExitCodeDescription(abHelper.getJobExitCodeDescriprion(tq.getBatchId().intValue()));
+								tq.saveElement();
 								
 								Issue issue = jh.getIssue(tq.getJiraItem());
 								jh.commentIssue(issue, tq.getCompany() + ": Failed. Error: " + tq.getExitCodeDescription());
 								
-								if (TaskQueue.countQueuedSubTasks(tq.getJiraItem(), AppSettings.getPREF_ACTIVE_INSTANCE_INST()) <= 1) {
-									jh.resolveIssue(issue, false, "Workflow failed");
+								if (TaskQueue.countQueuedSubTasks(tq.getJiraItem(), AppSettings.getPREF_ACTIVE_INSTANCE_INST()) < 1) {
+									//jh.resolveIssue(issue, false, "Workflow failed");
+									jh.resolveIssue(issue, false, jh.getIssueLog(issue));
 								}								
 	
 							}
@@ -69,14 +73,16 @@ public class ABThread extends Thread {
 								tq.setTimeFinished(abHelper.getJobExecTime(tq.getBatchId().intValue()));
 								tq.setExitCode(Long.valueOf(abHelper.getJobExitCode(tq.getBatchId().intValue())));
 								tq.setExitCodeDescription(abHelper.getJobExitCodeDescriprion(tq.getBatchId().intValue()));
+								tq.saveElement();
 								
 								Issue issue = jh.getIssue(tq.getJiraItem());
 								//jh.commentIssue(issue, tq.getCompany() + ": Succeeded");
 								
-								if (TaskQueue.countQueuedSubTasks(tq.getJiraItem(), AppSettings.getPREF_ACTIVE_INSTANCE_INST()) <= 1) {
-									jh.resolveIssue(issue, true, tq.getCompany() + ": Succeeded");
+								if (TaskQueue.countQueuedSubTasks(tq.getJiraItem(), AppSettings.getPREF_ACTIVE_INSTANCE_INST()) < 1) {
+									//jh.resolveIssue(issue, true, tq.getCompany() + ": Succeeded");
+									jh.resolveIssue(issue, true, jh.getIssueLog(issue));
 								} else {
-									jh.commentIssue(issue, tq.getCompany() + ": Succeeded");
+									//jh.commentIssue(issue, tq.getCompany() + ": Succeeded");
 								}
 	
 							} //else {
@@ -138,14 +144,16 @@ public class ABThread extends Thread {
 										AppSettings.getLog().log(Level.SEVERE, e.getMessage());
 										
 										tq.setStatus((TaskStatus) ReferenceType.getElement("Failed", TaskStatus.tableName()));
+										tq.saveElement();
 										// exception if abHelper not connected
 										//tq.setTimeFinished(abHelper.getJobExecTime(tq.getBatchId().intValue()));
 										///////////
 										
 										jh.commentIssue(issue, tq.getCompany() + ": Failed. Error: " + e.getMessage());
 										
-										if (TaskQueue.countQueuedSubTasks(jiraItem, AppSettings.getPREF_ACTIVE_INSTANCE_INST()) <= 1) {
-											jh.resolveIssue(issue, false, "Workflow failed");
+										if (TaskQueue.countQueuedSubTasks(jiraItem, AppSettings.getPREF_ACTIVE_INSTANCE_INST()) < 1) {
+											//jh.resolveIssue(issue, false, "Workflow failed");
+											jh.resolveIssue(issue, false, jh.getIssueLog(issue));
 										}								
 										
 										

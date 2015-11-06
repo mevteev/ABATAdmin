@@ -22,6 +22,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.id.CompositeNestedGeneratedValueGenerator.GenerationContextLocator;
 
+import com.atlassian.jira.rest.client.domain.Issue;
 import com.vtbcapital.itops.ABATAdmin.AppSettings.EnShowTasks;
 
 import javax.swing.JScrollPane;
@@ -556,6 +557,8 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 	
 	private void cancelCurrentRow() {
 		int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+
+		
 
 		//if (((TaskStatus)model.getValueAt(selectedRow, 6)).getStatus().equals("Queued") ) {
 			model.setValueAt((TaskStatus)ReferenceType.getElement("Cancelled", TaskStatus.tableName()), 
