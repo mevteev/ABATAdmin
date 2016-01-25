@@ -20,6 +20,7 @@ public class AppSettings {
 	final private static String PREF_LOGGER_PORT_NAME = "App_Logger_Port";
 	final private static String PREF_WEBADMIN_PORT_NAME = "Web_Admin_Port";
 	final private static String PREF_MAX_PARALLEL_JOBS_NAME = "Max_Parallel_Jobs";
+	final private static String PREF_ENABLE_WATCHERS_NAME = "Enable_Watchers";
 
 	final private static String defaultValue = "";
 	final private static String defaultInstance = "UAT";
@@ -28,6 +29,7 @@ public class AppSettings {
 	final private static Integer defaultLoggerPort = 6667;
 	final private static Integer defaultWebAdminPort = 8080;
 	final private static Integer defaultMaxParallelJobs = 4;
+	final private static Boolean defaultEnableWatchers = false;
 	
 	private static String PREF_JIRA_URL;
 	private static String PREF_JIRA_PROJECT;
@@ -43,6 +45,8 @@ public class AppSettings {
 	private static Integer PREF_SERVER_PORT;
 	private static Integer PREF_LOGGER_PORT;
 	private static Integer PREF_WEBADMIN_PORT;
+	
+	private static Boolean PREF_ENABLE_WATCHERS;	
 	
 	public static enum EnShowTasks {
 		AllTasks,
@@ -166,6 +170,17 @@ public class AppSettings {
 				PREF_WEBADMIN_PORT = Integer.parseInt(webAdminPortStr);	
 			} catch (NumberFormatException e) {
 				setPREF_WEBADMIN_PORT(defaultWebAdminPort);
+			}
+		}
+		
+		String enableWatchersStr = Config.getValue(PREF_ENABLE_WATCHERS_NAME);
+		if (enableWatchersStr == null) {
+			setPREF_ENABLE_WATCHERS(defaultEnableWatchers);
+		} else {
+			try {
+				PREF_ENABLE_WATCHERS = Boolean.parseBoolean(enableWatchersStr);
+			} catch (NumberFormatException e) {
+				setPREF_ENABLE_WATCHERS(defaultEnableWatchers);
 			}
 		}
 	}
@@ -366,6 +381,16 @@ public class AppSettings {
 
 	public static void setPREF_MAX_PARALLEL_JOBS(Integer pREF_MAX_PARALLEL_JOBS) {
 		PREF_MAX_PARALLEL_JOBS = pREF_MAX_PARALLEL_JOBS;
+		Config.setValue(PREF_MAX_PARALLEL_JOBS_NAME, PREF_MAX_PARALLEL_JOBS.toString());
+	}
+
+	public static Boolean getPREF_ENABLE_WATCHERS() {
+		return PREF_ENABLE_WATCHERS;
+	}
+
+	public static void setPREF_ENABLE_WATCHERS(Boolean pREF_ENABLE_WATCHERS) {
+		PREF_ENABLE_WATCHERS = pREF_ENABLE_WATCHERS;
+		Config.setValue(PREF_ENABLE_WATCHERS_NAME, pREF_ENABLE_WATCHERS.toString());
 	}
 
 }

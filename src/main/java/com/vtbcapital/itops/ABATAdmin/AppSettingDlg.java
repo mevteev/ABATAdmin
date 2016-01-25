@@ -38,6 +38,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JPasswordField;
 import javax.swing.JFormattedTextField;
+import javax.swing.JCheckBox;
 
 public class AppSettingDlg extends JDialog {
 
@@ -58,6 +59,8 @@ public class AppSettingDlg extends JDialog {
 	private JTextField tfServerName;
 	private JFormattedTextField tfServerPort;
 	private JFormattedTextField tfLoggerPort;
+	
+	private JCheckBox chckbxWatchers;
 	
 	private Socket clientSocket;
 	private PrintWriter outBuffer;
@@ -228,23 +231,33 @@ public class AppSettingDlg extends JDialog {
 				tfJiraUserName.setColumns(10);
 				
 				pfJiraPassword = new JPasswordField(AppSettings.getPREF_JIRA_PASSWORD());
+				
+				chckbxWatchers = new JCheckBox("Watchers");
+				
+				chckbxWatchers.setSelected(AppSettings.getPREF_ENABLE_WATCHERS());
+				
 				GroupLayout gl_panel = new GroupLayout(panel);
 				gl_panel.setHorizontalGroup(
 					gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblJiraUrl)
-								.addComponent(lblJiraProject)
-								.addComponent(lblUsername)
-								.addComponent(lblPassword))
-							.addGap(18)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(pfJiraPassword, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-								.addComponent(tfJiraUserName, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-								.addComponent(tfJiraProject, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(tfJiraURL, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
-							.addGap(112))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblJiraUrl)
+										.addComponent(lblJiraProject)
+										.addComponent(lblUsername)
+										.addComponent(lblPassword))
+									.addGap(18)
+									.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+										.addComponent(pfJiraPassword, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+										.addComponent(tfJiraUserName, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+										.addComponent(tfJiraProject, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(tfJiraURL, GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+									.addGap(112))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(chckbxWatchers)
+									.addContainerGap(293, Short.MAX_VALUE))))
 				);
 				gl_panel.setVerticalGroup(
 					gl_panel.createParallelGroup(Alignment.LEADING)
@@ -268,7 +281,9 @@ public class AppSettingDlg extends JDialog {
 							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblPassword)
 								.addComponent(pfJiraPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap(14, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(chckbxWatchers)
+							.addContainerGap(50, Short.MAX_VALUE))
 				);
 				panel.setLayout(gl_panel);
 			}
@@ -292,6 +307,7 @@ public class AppSettingDlg extends JDialog {
 						AppSettings.setPREF_SERVER_PORT((Integer)tfServerPort.getValue());
 						AppSettings.setPREF_LOGGER_PORT((Integer)tfLoggerPort.getValue());
 						AppSettings.setPREF_MAX_PARALLEL_JOBS((Integer)spParallel.getValue());
+						AppSettings.setPREF_ENABLE_WATCHERS(chckbxWatchers.isSelected());
 						
 						if (jh != null) {
 							jh.setServerPath(AppSettings.getPREF_JIRA_URL());

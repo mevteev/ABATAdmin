@@ -112,6 +112,9 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 	private JRadioButtonMenuItem rdbtnmntmTopTasks;
 	
 	private JLabel lblStatusBar;
+	private JMenuItem mntmUsers;
+	private JSeparator separator_1;
+	private JMenuItem mntmJiraWatchers;
 	
 	
 	/**
@@ -459,6 +462,33 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 			}
 		});
 		mnReferences.add(mntmTypes);
+		
+		separator_1 = new JSeparator();
+		mnReferences.add(separator_1);
+		
+		mntmUsers = new JMenuItem("Users");
+		mntmUsers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReferenceTableDialog editUsers = new ReferenceTableDialog(
+						frame, so, "Users",
+						Types.class);
+				editUsers.initialize();
+				editUsers.setTitle("Edit Users");
+				editUsers.setModal(true);
+				editUsers.setVisible(true);
+			}
+		});
+		mnReferences.add(mntmUsers);
+		
+		mntmJiraWatchers = new JMenuItem("JIRA Watchers");
+		mntmJiraWatchers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WatcherDialog editWatchers = new WatcherDialog();
+				editWatchers.setModal(true);
+				editWatchers.setVisible(true);
+			}
+		});
+		mnReferences.add(mntmJiraWatchers);
 		
 		
 	}

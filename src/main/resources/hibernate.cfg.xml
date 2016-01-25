@@ -17,6 +17,9 @@
   <mapping class="com.vtbcapital.itops.ABATAdmin.TaskStatus"/>
   <mapping class="com.vtbcapital.itops.ABATAdmin.TaskQueue"/>
   <mapping class="com.vtbcapital.itops.ABATAdmin.Config"/>
+  <mapping class="com.vtbcapital.itops.ABATAdmin.Users"/>
+  <mapping class="com.vtbcapital.itops.ABATAdmin.UserGroups"/>
+  <mapping class="com.vtbcapital.itops.ABATAdmin.Watchers"/>
   
  </session-factory>
 </hibernate-configuration>
