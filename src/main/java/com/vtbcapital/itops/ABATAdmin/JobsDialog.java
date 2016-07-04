@@ -147,7 +147,11 @@ public class JobsDialog extends ReferenceTableDialog {
 				session.delete((JobPath) (list.get(row)[1]));
 			} else {
 				session.saveOrUpdate((Jobs) (list.get(row)[0]));
-				session.saveOrUpdate((JobPath) (list.get(row)[1]));
+				JobPath jp = (JobPath) (list.get(row)[1]);
+				if (jp.getInstanceId() == null) {
+					jp.setInstanceId(AppSettings.getPREF_ACTIVE_INSTANCE_INST());
+				}
+				session.saveOrUpdate(jp);
 			}
 			tx.commit();
 		} catch (HibernateException err) {

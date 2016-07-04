@@ -121,6 +121,9 @@ public class ABThread extends Thread {
 											(!job.isParallel() && tq.isJobAlreadyInProgress()) ) 
 										continue;
 									
+									if (tq.getJob().isMonopoly() && tq.isMonopolyJobAlreadyInProgress())
+										continue;
+									
 									//AppSettings.getLog().log("Processing " + jiraItem);
 									// Change status in JIRA
 									

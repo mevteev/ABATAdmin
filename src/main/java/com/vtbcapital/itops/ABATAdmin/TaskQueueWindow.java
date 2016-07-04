@@ -127,7 +127,12 @@ public class TaskQueueWindow implements ActionListener, TableModelListener {
 			e.printStackTrace();
 		}
 		
-		AppSettings.getApplicationTitle();
+		try {
+			AppSettings.getApplicationTitle();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "error", JOptionPane.ERROR_MESSAGE);
+		}
+		
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

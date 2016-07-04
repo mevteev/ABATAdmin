@@ -38,6 +38,8 @@ public class Jobs extends ReferenceType {
 	private String param2;
 	
 	private boolean parallel;
+	
+	private boolean monopoly;
 
 	// protected String ABPath;
 
@@ -156,6 +158,16 @@ public class Jobs extends ReferenceType {
 
 	public void setParallel(boolean parallel) {
 		this.parallel = parallel;
+	}
+	
+	
+	@Column(name = "Monopoly")
+	public boolean isMonopoly() {
+		return monopoly;
+	}
+
+	public void setMonopoly(boolean monopoly) {
+		this.monopoly = monopoly;
 	}
 	
 	public static String tableName() {

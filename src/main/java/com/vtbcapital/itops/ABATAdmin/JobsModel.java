@@ -31,9 +31,9 @@ public class JobsModel extends AbstractTableModel {
 
 		datalist = referenceList;
 
-		columnNames = new String[] { "Name", "Type", "Active Batch Path", "Param1", "Param2", "Parallel" };
+		columnNames = new String[] { "Name", "Type", "Active Batch Path", "Param1", "Param2", "Parallel", "Monopoly" };
 
-		columnClass = new Class[] { String.class, Types.class, String.class, String.class, String.class, Boolean.class };
+		columnClass = new Class[] { String.class, Types.class, String.class, String.class, String.class, Boolean.class, Boolean.class };
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -57,6 +57,8 @@ public class JobsModel extends AbstractTableModel {
 			return ((Jobs) row[0]).getParam2();
 		case 5:
 			return ((Jobs) row[0]).isParallel();
+		case 6:
+			return ((Jobs) row[0]).isMonopoly();
 		}
 		return null;
 	}
@@ -95,6 +97,9 @@ public class JobsModel extends AbstractTableModel {
 		case 5:
 			((Jobs) row[0]).setParallel((boolean) aValue);
 			break;
+		case 6:
+			((Jobs) row[0]).setMonopoly((boolean) aValue);
+			break;			
 		}
 
 		fireTableRowsUpdated(rowIndex, rowIndex);

@@ -322,6 +322,18 @@ public class TaskQueue extends ReferenceType {
 		return lst.contains(getJob());
 	}
 	
+	@Transient
+	public boolean isMonopolyJobAlreadyInProgress() {
+		List<ReferenceType> lst = getInProgressEntityList(getInstance(), "job");
+		for (ReferenceType job : lst) {
+			if (((Jobs) job).isMonopoly()) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 	public static List<TaskQueue> getQueuedTasks(Instances inst) {
 		return getTasksByStatus(inst, "Queued"); 
 	}
